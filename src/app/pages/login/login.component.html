@@ -1,0 +1,19 @@
+<form [formGroup]="loginForm">
+    <input 
+        type="text"
+        placeholder="Login..."
+        formControlName="login"
+    >
+    <input
+        type="password"
+        placeholder="Password..."
+        formControlName="password"
+    >
+
+    <button 
+        type="submit"
+        [disabled]="isFormInvalid"
+    >
+        Login
+    </button>
+</form>

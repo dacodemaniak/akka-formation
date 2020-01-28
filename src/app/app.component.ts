@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'temporis';
+  private _title: String = 'Hello Angular';
+
+  public get title(): String {
+    return this._title;
+  }
 }
