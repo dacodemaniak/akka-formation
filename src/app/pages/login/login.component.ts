@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserService } from './../../shared/user/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
   ) { }
 
   public get isFormInvalid(): boolean {
@@ -47,6 +49,7 @@ export class LoginComponent implements OnInit {
       .then((processLoginStatus: boolean) => {
         if (processLoginStatus) {
           console.log(`Have to route to 'home'`);
+          this.router.navigate(['home']);
         } else {
           console.log(`Something went wrong while authentication processing`);
         }
