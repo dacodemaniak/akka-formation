@@ -13,11 +13,17 @@ export class NavComponent implements OnInit {
     private userService: UserService
   ) { }
 
-  ngOnInit() {
-    this.userService.currentUser.subscribe((user: any) => {
+  public logout(): void {
+    this.userService.processLogout();
+  }
+  
+  public ngOnInit(): void {
+    this.userService.user.subscribe((user: any) => {
       console.log(`Hi, i'm the user with content : ${JSON.stringify(user)}`);
       if (user) {
         this.user = user;
+      } else {
+        this.user = null;
       }
     });
   }

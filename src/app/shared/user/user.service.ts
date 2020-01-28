@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from './../../../environments/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 interface UserInterface {
   token?: String,
@@ -19,16 +20,22 @@ export class UserService {
    */
   private user$: BehaviorSubject<UserInterface> = new BehaviorSubject<UserInterface>(null);
 
-  /**
-   * Define an observer to the external world
-   */
-  public currentUser: Observable<UserInterface> = this.user$.asObservable();
-
   constructor(
+    private router: Router
   ) {}
 
   public isAuthenticated(): boolean {
     return this._user ? true : false;
+  }
+
+  public get user(): Observable<UserInterface> {
+    return this.user$;
+  }
+
+  public processLogout(): void {
+    this._user = null;
+    this.user$.next(this._user); // Emit the new user status
+    this.router.navigate(['login']);
   }
 
   public processLogin(datas: any): Promise<any | boolean> {
@@ -39,7 +46,7 @@ export class UserService {
             loginName: datas.login,
             token: '123456'
           };
-          this.user$.next(this._user);
+          this.user$.next(this._user); // Emit the user changes
 
           resolve(true)
         },

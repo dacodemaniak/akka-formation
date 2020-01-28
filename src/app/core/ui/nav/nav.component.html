@@ -1,4 +1,10 @@
 <div>
-    <mat-icon *ngIf="user" aria-hidden="false" aria-label="Authenticated user">person</mat-icon>
-    <mat-icon *ngIf="!user" aria-hidden="false" aria-label="Authenticated user">person_outline</mat-icon>
+    <mat-icon 
+        *ngIf="user" 
+        aria-hidden="false" 
+        aria-label="Authenticated user"
+        (click)="logout()"
+    >person</mat-icon>
+    <mat-icon 
+        *ngIf="!user" aria-hidden="false" aria-label="No account logged">person_outline</mat-icon>
 </div>
