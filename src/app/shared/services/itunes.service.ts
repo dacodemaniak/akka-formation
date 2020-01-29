@@ -4,6 +4,7 @@ import { ItunesInterface } from '../interfaces/itunes-interface';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { ItunesFactory } from '../helpers/itunes-factory';
 
 @Injectable({
   providedIn: 'root'
@@ -18,12 +19,7 @@ export class ItunesService {
       .pipe(
         map((res: any) => { // Whole response
           return res.results.map((item: any): ItunesInterface => { // One item of the whole
-            return {
-              trackName: item.trackName,
-              artistName: item.artistName,
-              trackViewUrl: item.trackViewUrl,
-              artistId: item.artistId
-            } // For each item in the stream => one ITunesInterface item
+            return ItunesFactory.getFullInstance(item) // For each item in the stream => one ITunesInterface item
           })
         })
       );
