@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/shared/user/user.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-nav',
@@ -7,8 +8,12 @@ import { UserService } from 'src/app/shared/user/user.service';
   styleUrls: ['./nav.component.scss']
 })
 export class NavComponent implements OnInit {
+  /**
+   * Instance of an observated user
+   */
   public user: any;
-
+  public user$: Observable<any>;
+  
   constructor(
     private userService: UserService
   ) { }
@@ -18,7 +23,8 @@ export class NavComponent implements OnInit {
   }
   
   public ngOnInit(): void {
-    this.userService.user.subscribe((user: any) => {
+    this.user$ = this.userService.user;
+    this.user$.subscribe((user: any) => {
       console.log(`Hi, i'm the user with content : ${JSON.stringify(user)}`);
       if (user) {
         this.user = user;

@@ -1,0 +1,4 @@
+<div>
+    <p *ngIf="userService.getUser()">{{ userService.getUser().loginName }}</p>
+    <p *ngIf="!userService.getUser()">No account logged</p>
+</div>

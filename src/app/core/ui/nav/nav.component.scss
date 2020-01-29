@@ -1,0 +1,9 @@
+@import './../../../../assets/variables.scss';
+
+mat-icon {
+    color: $icon-color;
+    &.pointer-icon {
+        cursor: pointer;
+        color: $icon-color-ok;
+    }
+}

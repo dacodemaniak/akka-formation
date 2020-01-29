@@ -32,6 +32,10 @@ export class UserService {
     return this.user$;
   }
 
+  public getUser(): UserInterface {
+    return this._user;
+  }
+
   public processLogout(): void {
     this._user = null;
     this.user$.next(this._user); // Emit the new user status
@@ -47,7 +51,9 @@ export class UserService {
             token: '123456'
           };
           this.user$.next(this._user); // Emit the user changes
-
+          
+          localStorage.setItem('user', JSON.stringify(this._user));
+          
           resolve(true)
         },
         500
