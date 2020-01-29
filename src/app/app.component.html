@@ -2,15 +2,17 @@
 
 <router-outlet></router-outlet>
 
-<button
-    type="button"
-    (click)="search('The Police')"
->
-    J'ai de la chance
-</button>
+
+
+<form [formGroup]="searchForm">
+    <mat-form-field>
+        <input matInput type="search" formControlName="term">
+    </mat-form-field>
+</form>
 
 <mat-spinner *ngIf="noResult"></mat-spinner>
-<div *ngFor="let item of results">
+
+<div *ngFor="let item of results | async">
     {{ item.trackName }}
 </div>
 <app-footer></app-footer>

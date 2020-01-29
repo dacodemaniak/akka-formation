@@ -11,7 +11,7 @@ export class Itunes implements ItunesInterface {
         
         for(let property in me) {
             console.log(`Assign : ${datas[property]} for property ${property}`);
-            if (datas.hasOwnProperty(property) && datas.property != undefined) {
+            if (datas.hasOwnProperty(property) && datas[property] !== undefined) {
                 me[property] = datas[property];
             }
         }
