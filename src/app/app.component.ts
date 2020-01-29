@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { Observable, of, Subscription, from } from 'rxjs';
+
+import { Observable, Subscription, from, of } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
 
 @Component({
