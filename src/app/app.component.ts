@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 
 import { Observable, Subscription, from, of } from 'rxjs';
-import { tap, map } from 'rxjs/operators';
+import { tap, map, take } from 'rxjs/operators';
 
 import { environment } from './../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { ItunesInterface } from './shared/interfaces/itunes-interface';
+import { ItunesService } from './shared/services/itunes.service';
 
 @Component({
   selector: 'app-root',
@@ -17,8 +18,12 @@ export class AppComponent {
 
   private oneObservable: Observable<string> = of('a value');
 
+  public results: ItunesInterface[];
+
+  public noResult: boolean = false;
+
   public constructor(
-    private httpClient: HttpClient
+    private iTunesService: ItunesService
   ) {
     const stream: Subscription = this.oneObservable.subscribe((observed: string) => {
       console.log('Je suis la valeur observée : ' + observed);
@@ -61,26 +66,16 @@ export class AppComponent {
     return this._title;
   }
 
-  public search(term: string): void {
-    let apiURI: string = `${environment.apiRoot}?term=${term}&media=music&limit=20`;
-    this.httpClient.get<any[]>(apiURI)
+  public search(terms: string): void {
+    this.noResult = true;
+    this.iTunesService.search(terms)
       .pipe(
-        map((res: any) => { // Whole response
-          return res.results.map((item: any): ItunesInterface => { // One item of the whole
-            return {
-              trackName: item.trackName,
-              artistName: item.artistName,
-              trackViewUrl: item.trackViewUrl,
-              artistId: item.artistId
-            } // For each item in the stream, one ITunesInterface item
-          })
-        })
+        take(1)
       )
       .subscribe((results: ItunesInterface[]) => {
-        console.log(`Results from Apple : ${JSON.stringify(results)}`);
-      },
-      (error: any) => {
-        
+        this.results = results;
+        this.noResult = false;
       });
   }
+
 }

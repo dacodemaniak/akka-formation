@@ -8,4 +8,9 @@
 >
     J'ai de la chance
 </button>
+
+<mat-spinner *ngIf="noResult"></mat-spinner>
+<div *ngFor="let item of results">
+    {{ item.trackName }}
+</div>
 <app-footer></app-footer>
